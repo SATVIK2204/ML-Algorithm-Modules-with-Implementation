@@ -4,6 +4,16 @@ class LinearRegression:
       
     
     def normalize(self,X):
+        """ Normalize Function
+        Normalize the data to have 0 mean and 1 standard deviation
+
+        :Parameters:
+        X  : Input Data
+
+        :Return:
+        Normalized data
+        
+        """
         mean=X.mean(axis=0)
         
         standard_deviation=X.std(axis=0)
@@ -13,6 +23,16 @@ class LinearRegression:
         return X_normalized
     
     def add_ones(self,X):
+        """ Add Ones Function
+        Adds a column of ones for the X0 in our model
+
+        :Parameters:
+        X  : Input Data
+
+        :Return:
+        New X
+
+        """
         ones = np.ones((X.shape[0],1))
         X_new= np.hstack((ones,X))
         self.X=X_new
@@ -99,7 +119,17 @@ class LinearRegression:
         return theta,cost_list
     
     def predict(self,theta,X):
-        
+        """ Gradient Function
+        It returns the gradient value
+
+        :Parameters:
+        lr : Learning rate (default=0.1)
+        iteration : No of iteration to run (default=500)
+
+        :Return:
+        List of costs at different theta throughout the training
+
+        """
         Y_pred = self.hypothesis(theta,X)
         
         return Y_pred
