@@ -1,5 +1,5 @@
 import numpy as np
-
+import matplotlib.pyplot as plt
 
 class Kmeans:
 
@@ -39,6 +39,29 @@ class Kmeans:
 
     def find_nearest(self,distance):
         return np.argmin(distance,axis=1)
+
+    def compute_centroids(self,X,labels):
+        centroids = np.zeros((self.no_of_clusters, X.shape[1]))
+        for k in range(self.no_of_clusters):
+            centroids[k, :] = np.mean(X[labels == k, :], axis=0)
+        return centroids
+    
+    def fit(self,X):
+        self.centroids=self.initialize_centroids(X)
+        for i in range(self.max_itr):
+            old_centroids = self.centroids
+            distance = self.find_distance(X, old_centroids)
+            self.labels = self.find_nearest(distance)
+            self.centroids = self.compute_centroids(X, self.labels)
+            if np.all(old_centroids == self.centroids):
+                break
+            # plt.scatter(X[:,0],X[:,1], s=7)
+            # plt.scatter(self.centroids[:,0], self.centroids[:,1], marker='*', c='r', s=150)
+            # plt.show()
+    def predict(self, X):
+        distance = self.find_distance(X, self.centroids)
+        return self.find_nearest(distance)
+
     
     
 
